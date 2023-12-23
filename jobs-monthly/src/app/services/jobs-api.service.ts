@@ -6,6 +6,5 @@ import { Injectable } from '@angular/core';
 })
 export class JobsApiService {
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) { }
 }
