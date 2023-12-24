@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import {
+  Component,
+  OnInit,
+} from '@angular/core';
 
 import {
   catchError,
@@ -14,11 +18,12 @@ import { JobsApiService } from '@services/jobs-api.service';
   imports: [],
   templateUrl: './job-container.component.html'
 })
-export class JobContainerComponent {
+export class JobContainerComponent implements OnInit {
 
-  constructor(private jobService: JobsApiService ) { }
+  constructor(private jobService: JobsApiService,
+    private http: HttpClient ) { }
 
-  getJobDescriptions(filter: string = 'all') {
+  getJobDescriptions(filter: string = '') {
     this.jobService.getJobDescriptions(filter).pipe(
       take(1),
       tap((data) => data),
@@ -29,7 +34,7 @@ export class JobContainerComponent {
     })
   }
 
-  ngOnit(){
+  ngOnInit(){
     this.getJobDescriptions();
   }
 }

@@ -13,6 +13,6 @@ export class JobsApiService {
   constructor(private http: HttpClient) { }
 
   getJobDescriptions(filter: string): Observable<JobDescription> {
-    return this.http.get<JobDescription>(`http://dsg-api-test.k2-app.com/ats/search/${filter}`);
+    return this.http.get<JobDescription>(`http://localhost:3000/api/jobs`);
   }
 }
