@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { JobDescription } from '@interfaces/job-description.object';
 import { ComponentStore } from '@ngrx/component-store';
-import { JobsApiService } from '@services/jobs-api.service';
 
 export interface JobDescriptionState {
   jobsDescription: JobDescription[];
@@ -15,7 +14,7 @@ const defaultJobState: JobDescriptionState = {
 @Injectable()
 export class JobsStore extends ComponentStore<JobDescriptionState>{
 
-  constructor( private jobService: JobsApiService ) {
+  constructor() {
     super(defaultJobState)
   }
   readonly jobsDescription$ = this.select((state) => state.jobsDescription);
