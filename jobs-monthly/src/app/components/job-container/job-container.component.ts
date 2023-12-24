@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import {
   Component,
   OnInit,
@@ -7,34 +6,44 @@ import {
 import {
   catchError,
   take,
-  tap,
 } from 'rxjs';
 
 import { JobsApiService } from '@services/jobs-api.service';
+import { JobsStore } from '@stores/jobs-store.store';
 
 @Component({
   selector: 'app-job-container',
   standalone: true,
   imports: [],
+  providers: [JobsStore],
   templateUrl: './job-container.component.html'
 })
 export class JobContainerComponent implements OnInit {
+  public jobDescriptions$ = this.jobsStore.jobsDescription$;
 
-  constructor(private jobService: JobsApiService,
-    private http: HttpClient ) { }
+  constructor(
+    private jobService: JobsApiService,
+    private readonly jobsStore: JobsStore
+    ) {}
 
-  getJobDescriptions(filter: string = '') {
-    this.jobService.getJobDescriptions(filter).pipe(
+  getJobDescriptions() {
+    this.jobService.getJobDescriptions().pipe(
       take(1),
-      tap((data) => data),
       catchError((error) => { throw `Error Occurred: ${error}` })
     ).subscribe({
-      next: (data) => console.log(data),
-      error: (error) => console.log(error)
+      next: (resp) => this.jobsStore.updateJobDescriptions(resp),
+      error: (err) => console.log(err)
     })
   }
 
   ngOnInit(){
-    this.getJobDescriptions();
+    this.getJobDescriptions()
+
+    this.jobDescriptions$.subscribe(
+      (x) => {
+        console.log("Component: ")
+        console.log(x)
+      }
+    )
   }
 }
