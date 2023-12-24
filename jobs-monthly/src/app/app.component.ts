@@ -12,7 +12,8 @@ import {
   imports: [
     CommonModule,
     JobContainerComponent,
-    RouterOutlet],
+    RouterOutlet
+  ],
   templateUrl: './app.component.html'
 })
 export class AppComponent {
