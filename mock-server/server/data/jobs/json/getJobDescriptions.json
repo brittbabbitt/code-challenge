@@ -2,21 +2,21 @@
   "data": {
     "jobDescriptions": [
       {
-        "websiteTitle": "CETARA",
+        "websiteTitle": "CERTARA",
         "websiteOrganization": "Certara, USA",
-        "websiteLocation": "www.certara.com",
+        "websiteLocation": "www.Certara.com",
         "websiteDatePublished": "2023-01-17T02:00:30Z"
       },
       {
         "websiteTitle": "GOOGLE",
         "websiteOrganization": "ABC,Inc.",
-        "websiteLocation": "www.google.com",
+        "websiteLocation": "www.Google.com",
         "websiteDatePublished": "2023-12-05T01:38:29Z"
       },
       {
         "websiteTitle": "TEST",
         "websiteOrganization": "Test,LLC.",
-        "websiteLocation": "www.test.com",
+        "websiteLocation": "www.Test.com",
         "websiteDatePublished": "2023-01-05T09:18:31Z"
       },
       {

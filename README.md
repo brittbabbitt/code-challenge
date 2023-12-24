@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Mock server
 
-cd to `./mock-server` and run `npm run mock:server`. You will know the server is running when it says `Listening on port 3000`.
+cd to `./mock-server` and run `npm run mock:server`. You will know the server is running when it says `Server Listening on port 3000`.
 
 note: The mock-server was created because the api endpoint given was not working at the time I was executing this challenge.
 
