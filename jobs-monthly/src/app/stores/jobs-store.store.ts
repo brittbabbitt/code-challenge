@@ -1,27 +1,35 @@
 import { Injectable } from '@angular/core';
 
 import { JobDescription } from '@interfaces/job-description.object';
+import { JobMonthly } from '@interfaces/job-monthly.object';
 import { ComponentStore } from '@ngrx/component-store';
 
 export interface JobDescriptionState {
-  jobsDescription: JobDescription[];
+  jobsDescripts: JobDescription[];
+  monthlyDescripts: JobMonthly[];
 };
 
 const defaultJobState: JobDescriptionState = {
-  jobsDescription: [],
+  jobsDescripts: [],
+  monthlyDescripts: [],
 };
 
 @Injectable()
 export class JobsStore extends ComponentStore<JobDescriptionState>{
 
   constructor() {
-    super(defaultJobState)
+    super(defaultJobState);
   }
-  readonly jobsDescription$ = this.select((state) => state.jobsDescription);
+  readonly jobsDescripts$ = this.select((state) => state.jobsDescripts);
+  readonly monthlyDescripts$ = this.select((state) => state.monthlyDescripts);
 
   readonly updateJobDescriptions = this.updater((state, jobsDescription: JobDescription[] | null) => ({
     ...state,
-    jobsDescription: jobsDescription || [], // updates with new value
+    jobsDescripts: jobsDescription || [],
   }));
 
+  readonly updateMonthlyDescriptions = this.updater((state, monthlyBuckets: JobMonthly[] | null) => ({
+    ...state,
+    monthlyDescripts: monthlyBuckets || [],
+  }));
 }
