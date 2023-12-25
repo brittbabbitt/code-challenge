@@ -4,3 +4,9 @@ export interface JobDescription {
   websiteLoca1on: string,
   websiteDatePublished: string
 }
+
+export interface JobDescriptionData {
+  data: {
+    jobDescriptions: JobDescription[]
+  }
+}
