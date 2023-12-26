@@ -40,10 +40,11 @@ import { JobsStore } from '@stores/jobs-store.store';
   templateUrl: './job-container.component.html'
 })
 export class JobContainerComponent implements OnInit, OnDestroy {
+  private monthlyBuckets: JobMonthly[] = [];
+
   private jobDescriptSubscription: Subscription = new Subscription();
   private monthlySubscription: Subscription = new Subscription();
   private jobsByMonthSubscription: Subscription = new Subscription();
-  private monthlyBuckets: JobMonthly[] = [];
 
   public jobDescriptions$ = this.jobsStore.jobsDescripts$;
   public monthlyDescriptions$ = this.jobsStore.monthlyDescripts$;
@@ -168,5 +169,6 @@ export class JobContainerComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.jobDescriptSubscription.unsubscribe();
     this.monthlySubscription.unsubscribe();
+    this.jobsByMonthSubscription.unsubscribe();
   }
 }
