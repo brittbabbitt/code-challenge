@@ -1,7 +1,7 @@
 export interface JobDescription {
   websiteTitle: string,
-  websiteOrganiza1on: string,
-  websiteLoca1on: string,
+  websiteOrganization: string,
+  websiteLocation: string,
   websiteDatePublished: string
 }
 

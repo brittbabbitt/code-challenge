@@ -18,6 +18,7 @@ import {
 import {
   JobBarGraphComponent,
 } from '@components/job-bar-graph/job-bar-graph.component';
+import { JobTableComponent } from '@components/job-table/job-table.component';
 import { JobDescription } from '@interfaces/job-description.object';
 import {
   JobMonthly,
@@ -29,7 +30,12 @@ import { JobsStore } from '@stores/jobs-store.store';
 @Component({
   selector: 'app-job-container',
   standalone: true,
-  imports: [ AsyncPipe, JobBarGraphComponent, NgIf],
+  imports: [
+    AsyncPipe,
+    JobBarGraphComponent,
+    JobTableComponent,
+    NgIf
+  ],
   providers: [JobsStore, JobsApiService],
   templateUrl: './job-container.component.html'
 })
