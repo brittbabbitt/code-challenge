@@ -1,4 +1,8 @@
 import {
+  AsyncPipe,
+  NgIf,
+} from '@angular/common';
+import {
   Component,
   OnDestroy,
   OnInit,
@@ -11,6 +15,9 @@ import {
   tap,
 } from 'rxjs';
 
+import {
+  JobBarGraphComponent,
+} from '@components/job-bar-graph/job-bar-graph.component';
 import { JobDescription } from '@interfaces/job-description.object';
 import {
   JobMonthly,
@@ -22,7 +29,7 @@ import { JobsStore } from '@stores/jobs-store.store';
 @Component({
   selector: 'app-job-container',
   standalone: true,
-  imports: [],
+  imports: [ AsyncPipe, JobBarGraphComponent, NgIf],
   providers: [JobsStore, JobsApiService],
   templateUrl: './job-container.component.html'
 })

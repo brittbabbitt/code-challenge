@@ -12,6 +12,24 @@ note: The mock-server was created because the api endpoint given was not working
 
 cd to `./jobs-monthly`. Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
+## Simple Structure
+Below is a model of the directory structure for the app.
+
+```
+jobs-monthly
+    |-src
+        |-app
+            |-components
+                |-job-bar-graph
+                |-job-container
+                |-job-table
+            |-interfaces
+            |-services
+            |-stores
+```
+
+note: job-container is the parent component of job-bar-graph and job-table
+
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
@@ -31,3 +49,6 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+### Direct Questions
+If there are any questions, please feel free to reach out to me at babbitt.brittany@gmail.com or via phone listed on my resume.
