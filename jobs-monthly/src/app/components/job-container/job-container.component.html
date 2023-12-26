@@ -1,1 +1,3 @@
-<p>job-container works!</p>
+<div *ngIf="monthlyDescriptions$ | async as monthlyData">
+  <app-job-bar-graph [monthlyInputData] = "monthlyData" ></app-job-bar-graph>
+</div>
