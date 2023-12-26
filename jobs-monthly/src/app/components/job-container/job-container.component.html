@@ -1,5 +1,6 @@
 <div *ngIf="monthlyDescriptions$ | async as monthlyData">
   <app-job-bar-graph [monthlyInputData] = "monthlyData" ></app-job-bar-graph>
-  <app-job-table></app-job-table>
 </div>
+
+<app-job-table></app-job-table>
 

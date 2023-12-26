@@ -7,21 +7,30 @@ import { ComponentStore } from '@ngrx/component-store';
 export interface JobDescriptionState {
   jobsDescripts: JobDescription[];
   monthlyDescripts: JobMonthly[];
+  jobsByMonth: JobMonthly;
 };
 
-const defaultJobState: JobDescriptionState = {
+const DEFAULT_JOB_STATE: JobDescriptionState = {
   jobsDescripts: [],
   monthlyDescripts: [],
+  jobsByMonth: {
+    month: '',
+    jobs: []
+  },
 };
 
 @Injectable()
 export class JobsStore extends ComponentStore<JobDescriptionState>{
 
   constructor() {
-    super(defaultJobState);
+    super(DEFAULT_JOB_STATE);
   }
   readonly jobsDescripts$ = this.select((state) => state.jobsDescripts);
   readonly monthlyDescripts$ = this.select((state) => state.monthlyDescripts);
+  readonly jobsByMonth$ = this.select((state) => state.jobsByMonth );
+
+
+  //---UPDATERS---//
 
   readonly updateJobDescriptions = this.updater((state, jobsDescription: JobDescription[] | null) => ({
     ...state,
@@ -32,4 +41,13 @@ export class JobsStore extends ComponentStore<JobDescriptionState>{
     ...state,
     monthlyDescripts: monthlyBuckets || [],
   }));
+
+  readonly updateJobsByMonth = this.updater((state, jobsByMonth: JobMonthly | null) => ({
+    ...state,
+    jobsByMonth: jobsByMonth || DEFAULT_JOB_STATE.jobsByMonth,
+  }));
+
+
+  //--EFFECTS--//
+
 }

@@ -42,10 +42,12 @@ import { JobsStore } from '@stores/jobs-store.store';
 export class JobContainerComponent implements OnInit, OnDestroy {
   private jobDescriptSubscription: Subscription = new Subscription();
   private monthlySubscription: Subscription = new Subscription();
+  private jobsByMonthSubscription: Subscription = new Subscription();
   private monthlyBuckets: JobMonthly[] = [];
 
   public jobDescriptions$ = this.jobsStore.jobsDescripts$;
   public monthlyDescriptions$ = this.jobsStore.monthlyDescripts$;
+  public jobsByMonthTable$ = this.jobsStore.jobsByMonth$;
 
   constructor(
     private readonly jobService: JobsApiService,
@@ -156,6 +158,10 @@ export class JobContainerComponent implements OnInit, OnDestroy {
 
     this.monthlySubscription = this.monthlyDescriptions$.subscribe(
       // (x) => console.log("monthlyDescriptions$", x)
+    );
+
+    this.jobsByMonthSubscription = this.jobsByMonthTable$.subscribe(
+      (x) => console.log("jobsByMonthTable", x)
     );
   }
 

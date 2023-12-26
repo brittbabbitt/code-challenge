@@ -2,9 +2,13 @@ import {
   DatePipe,
   NgFor,
 } from '@angular/common';
-import { Component } from '@angular/core';
+import {
+  Component,
+  Input,
+} from '@angular/core';
 
 import { JobDescription } from '@interfaces/job-description.object';
+import { JobMonthly } from '@interfaces/job-monthly.object';
 
 const SAMPLEDATA: JobDescription[] = [
 	{
@@ -46,6 +50,7 @@ const SAMPLEDATA: JobDescription[] = [
   templateUrl: './job-table.component.html'
 })
 export class JobTableComponent {
+  @Input() monthlyInputTableData: JobMonthly | undefined;
   jobDescriptions = SAMPLEDATA;
 
   trackIdentity = (index: number, jobs: JobDescription) => jobs.websiteDatePublished;
