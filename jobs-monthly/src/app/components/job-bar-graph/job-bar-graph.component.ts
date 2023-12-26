@@ -22,6 +22,13 @@ export class JobBarGraphComponent implements OnChanges {
 
   constructor(private readonly jobsStore: JobsStore){}
 
+  /**
+   * @name mapChartData
+   * @param monthlyData
+   * @returns {label: string, y: number}[]
+   * @description maps the monthly descriptions (month and count) to the labels and amounts
+   * needed for chart dataPoints and returns them
+   */
   private mapChartData (monthlyData: JobMonthly[]): {label: string, y: number}[] {
    let viewData = [
       { label: monthlyData[0].month,  y: monthlyData[0].jobs.length },
@@ -40,6 +47,11 @@ export class JobBarGraphComponent implements OnChanges {
     return viewData;
   }
 
+  /**
+   * @name setMonthlyChartOptions
+   * @param dataInfo of type {lable: string, y: number}[]
+   * @description sets all options for the chart after recieving the dataPoints needed to create the column graph
+   */
   private setMonthlyChartOptions (dataInfo: {label: string, y: number}[]) {
     this.monthlyChartOptions = {
       title: {
