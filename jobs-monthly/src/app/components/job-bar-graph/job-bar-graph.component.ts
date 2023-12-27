@@ -1,26 +1,26 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
+  Output,
 } from '@angular/core';
 
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { JobMonthly } from '@interfaces/job-monthly.object';
-import { JobsStore } from '@stores/jobs-store.store';
 
 @Component({
   selector: 'app-job-bar-graph',
   standalone: true,
   imports: [ CanvasJSAngularChartsModule ],
-  providers: [JobsStore],
   templateUrl: './job-bar-graph.component.html'
 })
 
 export class JobBarGraphComponent implements OnChanges {
   @Input() monthlyInputData: JobMonthly[] = [];
-  monthlyChartOptions = {};
+  @Output() onMonthClick = new EventEmitter<string>();
 
-  constructor(private readonly jobsStore: JobsStore){}
+  monthlyChartOptions = {};
 
   /**
    * @name mapChartData
@@ -59,14 +59,21 @@ export class JobBarGraphComponent implements OnChanges {
       },
       data: [{
         type: "column",
-        click: this.onMonthClick,
+        click: this.monthClick,
         dataPoints: dataInfo
       }]
     }
   }
 
-  onMonthClick(e: any) {
-		console.log("dataPoint label:" + e.dataPoint.label);
+  /**
+   * @name monthClick
+   * @param e click event from bar graph data column
+   * @returns emits event of type string
+   * @description click handler for bar graph clicks
+   */
+  monthClick = (e: any) => {
+    let label = e.dataPoint.label;
+    return this.onMonthClick.emit(label);
 	}
 
   ngOnChanges() {

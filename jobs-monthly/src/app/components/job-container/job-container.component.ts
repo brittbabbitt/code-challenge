@@ -18,6 +18,7 @@ import {
 import {
   JobBarGraphComponent,
 } from '@components/job-bar-graph/job-bar-graph.component';
+import { JobTableComponent } from '@components/job-table/job-table.component';
 import { JobDescription } from '@interfaces/job-description.object';
 import {
   JobMonthly,
@@ -29,17 +30,22 @@ import { JobsStore } from '@stores/jobs-store.store';
 @Component({
   selector: 'app-job-container',
   standalone: true,
-  imports: [ AsyncPipe, JobBarGraphComponent, NgIf],
+  imports: [
+    AsyncPipe,
+    JobBarGraphComponent,
+    JobTableComponent,
+    NgIf
+  ],
   providers: [JobsStore, JobsApiService],
   templateUrl: './job-container.component.html'
 })
 export class JobContainerComponent implements OnInit, OnDestroy {
-  private jobDescriptSubscription: Subscription = new Subscription();
-  private monthlySubscription: Subscription = new Subscription();
   private monthlyBuckets: JobMonthly[] = [];
+  private jobDescriptSubscription: Subscription = new Subscription();
 
   public jobDescriptions$ = this.jobsStore.jobsDescripts$;
   public monthlyDescriptions$ = this.jobsStore.monthlyDescripts$;
+  public jobsByMonthTable$ = this.jobsStore.jobsByMonth$;
 
   constructor(
     private readonly jobService: JobsApiService,
@@ -47,28 +53,10 @@ export class JobContainerComponent implements OnInit, OnDestroy {
   ) {}
 
   /**
-   * @name updateStoreJobDescripts
-   * @param allJobs
-   * @description updates the Jobs Store with the full list of descriptions
+   * @name setInitMonthlyNames
+   * @description initializes the monthlyBuckets array for each month name
    */
-  private updateStoreJobDescripts(allJobs: JobDescription[]) {
-    this.jobsStore.updateJobDescriptions(allJobs);
-  }
-
-  /**
-   * @name updateStoreMonthlyDescriptions
-   * @param monthBuckets
-   * @description updates the Jobs Store with the Job Descriptions per month
-   */
-  private updateStoreMonthlyDescriptions(monthBuckets: JobMonthly[]) {
-    this.jobsStore.updateMonthlyDescriptions(monthBuckets);
-  }
-
-  /**
-   * @name setInitMonthlyDescriptions
-   * @description initializes the monthlyBuckets array for each month
-   */
-  private setInitMonthlyDescriptions() {
+  private setInitMonthlyNames() {
     const monthNames = Object.keys(MONTHS).filter(x => !(parseInt(x) >= 0));
     monthNames.forEach((month) => {
       this.monthlyBuckets.push({
@@ -82,7 +70,7 @@ export class JobContainerComponent implements OnInit, OnDestroy {
    * @name addMonthlyDescriptions
    * @param jobs
    * @description parses through the Job Descriptions via ISO 8601 Month Dates and adds them to
-   * monthlyBuckets array according to the websiteDatePublished month
+   * monthlyBuckets array according to the websiteDatePublished month. Updates Store state.
    */
   private addMonthlyDescriptions(jobs: JobDescription[]) {
     if( jobs.length > 0){
@@ -119,7 +107,7 @@ export class JobContainerComponent implements OnInit, OnDestroy {
           default: console.log("Not a formated date, throwing out");
         }
       })
-      this.updateStoreMonthlyDescriptions(this.monthlyBuckets);
+      this.jobsStore.updateMonthlyDescriptions(this.monthlyBuckets);
     }
   }
 
@@ -133,28 +121,30 @@ export class JobContainerComponent implements OnInit, OnDestroy {
       catchError((error) => { throw `Error Occurred: ${error}` })
     )
     .subscribe({
-      next: (resp) => this.updateStoreJobDescripts(resp),
+      next: (resp) => this.jobsStore.updateJobDescriptions(resp),
       error: (err) => console.log(err)
     })
   }
 
+  /**
+   * @name setNewJobsByMonth
+   * @param monthName
+   * @description updates the Jobs Store with the Job Descriptions of month selected
+   */
+  setNewJobsByMonth( monthName: string) {
+    this.jobsStore.setNewJobsByMonth(monthName);
+  }
+
   ngOnInit(){
     this.getJobDescriptions();
-    this.setInitMonthlyDescriptions();
+    this.setInitMonthlyNames();
 
     this.jobDescriptSubscription = this.jobDescriptions$.pipe(
       tap((jobs: JobDescription[]) => this.addMonthlyDescriptions(jobs))
-    ).subscribe(
-      // (x) => console.log("jobDescriptions$", x)
-    );
-
-    this.monthlySubscription = this.monthlyDescriptions$.subscribe(
-      // (x) => console.log("monthlyDescriptions$", x)
-    );
+    ).subscribe();
   }
 
   ngOnDestroy() {
     this.jobDescriptSubscription.unsubscribe();
-    this.monthlySubscription.unsubscribe();
   }
 }

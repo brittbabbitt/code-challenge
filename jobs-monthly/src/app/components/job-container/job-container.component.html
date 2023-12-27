@@ -1,3 +1,8 @@
 <div *ngIf="monthlyDescriptions$ | async as monthlyData">
-  <app-job-bar-graph [monthlyInputData] = "monthlyData" ></app-job-bar-graph>
+  <app-job-bar-graph [monthlyInputData] = "monthlyData" (onMonthClick) = "setNewJobsByMonth($event)" ></app-job-bar-graph>
 </div>
+
+<div *ngIf="jobsByMonthTable$ | async as jobsByMonth">
+  <app-job-table [monthlyInputTableData] = jobsByMonth></app-job-table>
+</div>
+
