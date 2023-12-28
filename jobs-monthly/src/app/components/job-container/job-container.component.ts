@@ -45,9 +45,7 @@ export class JobContainerComponent implements OnInit, OnDestroy {
   public monthlyDescriptions$ = this.jobsStore.monthlyDescripts$;
   public jobsByMonthTable$ = this.jobsStore.jobsByMonth$;
 
-  constructor(
-    private readonly jobsStore: JobsStore
-  ) {}
+  constructor(private readonly jobsStore: JobsStore) {}
 
   /**
    * @name setInitMonthlyNames
