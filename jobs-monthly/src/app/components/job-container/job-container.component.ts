@@ -9,9 +9,7 @@ import {
 } from '@angular/core';
 
 import {
-  catchError,
   Subscription,
-  take,
   tap,
 } from 'rxjs';
 
@@ -19,12 +17,11 @@ import {
   JobBarGraphComponent,
 } from '@components/job-bar-graph/job-bar-graph.component';
 import { JobTableComponent } from '@components/job-table/job-table.component';
-import { JobDescription } from '@interfaces/job-description.object';
 import {
+  JobDescription,
   JobMonthly,
   MONTHS,
-} from '@interfaces/job-monthly.object';
-import { JobsApiService } from '@services/jobs-api.service';
+} from '@interfaces/job-description.object';
 import { JobsStore } from '@stores/jobs-store.store';
 
 @Component({
@@ -36,7 +33,7 @@ import { JobsStore } from '@stores/jobs-store.store';
     JobTableComponent,
     NgIf
   ],
-  providers: [JobsStore, JobsApiService],
+  providers: [JobsStore],
   templateUrl: './job-container.component.html'
 })
 export class JobContainerComponent implements OnInit, OnDestroy {
@@ -44,13 +41,11 @@ export class JobContainerComponent implements OnInit, OnDestroy {
   private jobDescriptSubscription: Subscription = new Subscription();
 
   public jobDescriptions$ = this.jobsStore.jobsDescripts$;
-  public monthlyDescriptions$ = this.jobsStore.monthlyDescripts$;
   public jobsByMonthTable$ = this.jobsStore.jobsByMonth$;
+  public monthlyDescriptions$ = this.jobsStore.monthlyDescripts$;
+  public loading$ = this.jobsStore.loading$;
 
-  constructor(
-    private readonly jobService: JobsApiService,
-    private readonly jobsStore: JobsStore
-  ) {}
+  constructor(private readonly jobsStore: JobsStore) {}
 
   /**
    * @name setInitMonthlyNames
@@ -112,21 +107,6 @@ export class JobContainerComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * @name getJobDescriptions
-   * @description gets the descriptions from the service and sends them to the store
-   */
-  private getJobDescriptions() {
-    this.jobService.getJobDescriptions().pipe(
-      take(1),
-      catchError((error) => { throw `Error Occurred: ${error}` })
-    )
-    .subscribe({
-      next: (resp) => this.jobsStore.updateJobDescriptions(resp),
-      error: (err) => console.log(err)
-    })
-  }
-
-  /**
    * @name setNewJobsByMonth
    * @param monthName
    * @description updates the Jobs Store with the Job Descriptions of month selected
@@ -136,7 +116,7 @@ export class JobContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(){
-    this.getJobDescriptions();
+    this.jobsStore.getJobDescriptions();
     this.setInitMonthlyNames();
 
     this.jobDescriptSubscription = this.jobDescriptions$.pipe(

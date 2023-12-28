@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
-import { JobMonthly } from '@interfaces/job-monthly.object';
+import { JobMonthly } from '@interfaces/job-description.object';
 
 @Component({
   selector: 'app-job-bar-graph',

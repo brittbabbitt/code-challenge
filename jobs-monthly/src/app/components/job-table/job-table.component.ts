@@ -9,8 +9,10 @@ import {
   Input,
 } from '@angular/core';
 
-import { JobDescription } from '@interfaces/job-description.object';
-import { JobMonthly } from '@interfaces/job-monthly.object';
+import {
+  JobDescription,
+  JobMonthly,
+} from '@interfaces/job-description.object';
 
 @Component({
   selector: 'app-job-table',
