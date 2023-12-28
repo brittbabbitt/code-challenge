@@ -65,7 +65,6 @@ export class JobsStore extends ComponentStore<JobDescriptionState>{
     apiError: apiError || null
   }));
 
-
   //--Effects--//
 
   readonly setNewJobsByMonth = this.effect((monthSelected$: Observable<string>) => {
