@@ -1,4 +1,4 @@
-<div *ngIf="monthlyInputTableData?.jobs?.length">
+<div *ngIf="monthlyInputTableData?.jobs?.length; else selectBar">
   <h2>Month: {{monthlyInputTableData!.month | titlecase}}</h2>
   <div class="table-responsive d-none d-sm-block">
     <hr>
@@ -36,4 +36,10 @@
     </div>
   </div>
 </div>
+
+<ng-template #selectBar>
+  <div class="d-flex justify-content-center mt-5">
+    <p><strong>Please select a bar from the graph.</strong></p>
+  </div>
+</ng-template>
 
