@@ -21,6 +21,7 @@ export interface JobDescriptionState {
   monthlyDescripts: JobMonthly[];
   jobsByMonth: JobMonthly;
   apiError: string | null;
+  loading: boolean;
 };
 
 export enum MONTHS {

@@ -27,6 +27,7 @@ const DEFAULT_JOB_STATE: JobDescriptionState = {
     jobs: []
   },
   apiError: null,
+  loading: true,
 };
 
 @Injectable()
@@ -65,13 +66,18 @@ export class JobsStore extends ComponentStore<JobDescriptionState>{
     apiError: apiError || null
   }));
 
+  readonly updateLoading = this.updater((state, loading: boolean) => ({
+    ...state,
+    loading: loading
+  }));
+
   //--Effects--//
 
   readonly setNewJobsByMonth = this.effect((monthSelected$: Observable<string>) => {
     return monthSelected$.pipe(
       withLatestFrom(this.monthlyDescripts$),
       tap(([monthSelected, monthsDescripts]) => {
-          const selectedJobsByMonth = monthsDescripts.find((jobs) => jobs.month == monthSelected )
+          const selectedJobsByMonth = monthsDescripts.find((jobs) => jobs.month == monthSelected);
           this.updateJobsByMonth(selectedJobsByMonth!);
       })
     )
@@ -81,10 +87,13 @@ export class JobsStore extends ComponentStore<JobDescriptionState>{
     return this.jobService.getJobDescriptions().pipe(
       take(1),
       tapResponse(
-        (jobDescripts: JobDescription[]) => this.updateJobDescriptions(jobDescripts),
+        (jobDescripts: JobDescription[]) => {
+          this.updateJobDescriptions(jobDescripts);
+          this.updateLoading(false);
+        },
         (error: HttpErrorResponse) => this.updateApiError(error.message)
       )
-    )
+    );
   });
 
 }
