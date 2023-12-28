@@ -11,8 +11,8 @@ import {
 import {
   JobDescription,
   JobDescriptionState,
+  JobMonthly,
 } from '@interfaces/job-description.object';
-import { JobMonthly } from '@interfaces/job-monthly.object';
 import {
   ComponentStore,
   tapResponse,

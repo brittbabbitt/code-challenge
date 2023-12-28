@@ -17,12 +17,11 @@ import {
   JobBarGraphComponent,
 } from '@components/job-bar-graph/job-bar-graph.component';
 import { JobTableComponent } from '@components/job-table/job-table.component';
-import { JobDescription } from '@interfaces/job-description.object';
 import {
+  JobDescription,
   JobMonthly,
   MONTHS,
-} from '@interfaces/job-monthly.object';
-import { JobsApiService } from '@services/jobs-api.service';
+} from '@interfaces/job-description.object';
 import { JobsStore } from '@stores/jobs-store.store';
 
 @Component({
@@ -34,7 +33,7 @@ import { JobsStore } from '@stores/jobs-store.store';
     JobTableComponent,
     NgIf
   ],
-  providers: [JobsStore, JobsApiService],
+  providers: [JobsStore],
   templateUrl: './job-container.component.html'
 })
 export class JobContainerComponent implements OnInit, OnDestroy {
