@@ -1,20 +1,23 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import {
   Observable,
+  take,
   tap,
   withLatestFrom,
 } from 'rxjs';
 
-import { JobDescription } from '@interfaces/job-description.object';
+import {
+  JobDescription,
+  JobDescriptionState,
+} from '@interfaces/job-description.object';
 import { JobMonthly } from '@interfaces/job-monthly.object';
-import { ComponentStore } from '@ngrx/component-store';
-
-export interface JobDescriptionState {
-  jobsDescripts: JobDescription[];
-  monthlyDescripts: JobMonthly[];
-  jobsByMonth: JobMonthly;
-};
+import {
+  ComponentStore,
+  tapResponse,
+} from '@ngrx/component-store';
+import { JobsApiService } from '@services/jobs-api.service';
 
 const DEFAULT_JOB_STATE: JobDescriptionState = {
   jobsDescripts: [],
@@ -23,12 +26,13 @@ const DEFAULT_JOB_STATE: JobDescriptionState = {
     month: 'JAN',
     jobs: []
   },
+  apiError: null,
 };
 
 @Injectable()
 export class JobsStore extends ComponentStore<JobDescriptionState>{
 
-  constructor() {
+  constructor(private readonly jobService: JobsApiService) {
     super(DEFAULT_JOB_STATE);
   }
 
@@ -37,6 +41,7 @@ export class JobsStore extends ComponentStore<JobDescriptionState>{
   readonly jobsDescripts$ = this.select((state) => state.jobsDescripts);
   readonly monthlyDescripts$ = this.select((state) => state.monthlyDescripts);
   readonly jobsByMonth$ = this.select((state) => state.jobsByMonth );
+  readonly apiError$ = this.select((state) => state.apiError );
 
   //---Updaters---//
 
@@ -55,6 +60,11 @@ export class JobsStore extends ComponentStore<JobDescriptionState>{
     jobsByMonth: jobsByMonth || DEFAULT_JOB_STATE.jobsByMonth,
   }));
 
+  readonly updateApiError = this.updater((state, apiError: string) => ({
+    ...state,
+    apiError: apiError || null
+  }));
+
 
   //--Effects--//
 
@@ -66,7 +76,16 @@ export class JobsStore extends ComponentStore<JobDescriptionState>{
           this.updateJobsByMonth(selectedJobsByMonth!);
       })
     )
-  }
+  });
 
-  )
+  readonly getJobDescriptions = this.effect(() => {
+    return this.jobService.getJobDescriptions().pipe(
+      take(1),
+      tapResponse(
+        (jobDescripts: JobDescription[]) => this.updateJobDescriptions(jobDescripts),
+        (error: HttpErrorResponse) => this.updateApiError(error.message)
+      )
+    )
+  });
+
 }

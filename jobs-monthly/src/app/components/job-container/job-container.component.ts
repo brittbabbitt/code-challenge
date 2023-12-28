@@ -9,9 +9,7 @@ import {
 } from '@angular/core';
 
 import {
-  catchError,
   Subscription,
-  take,
   tap,
 } from 'rxjs';
 
@@ -48,7 +46,6 @@ export class JobContainerComponent implements OnInit, OnDestroy {
   public jobsByMonthTable$ = this.jobsStore.jobsByMonth$;
 
   constructor(
-    private readonly jobService: JobsApiService,
     private readonly jobsStore: JobsStore
   ) {}
 
@@ -112,21 +109,6 @@ export class JobContainerComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * @name getJobDescriptions
-   * @description gets the descriptions from the service and sends them to the store
-   */
-  private getJobDescriptions() {
-    this.jobService.getJobDescriptions().pipe(
-      take(1),
-      catchError((error) => { throw `Error Occurred: ${error}` })
-    )
-    .subscribe({
-      next: (resp) => this.jobsStore.updateJobDescriptions(resp),
-      error: (err) => console.log(err)
-    })
-  }
-
-  /**
    * @name setNewJobsByMonth
    * @param monthName
    * @description updates the Jobs Store with the Job Descriptions of month selected
@@ -136,7 +118,7 @@ export class JobContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(){
-    this.getJobDescriptions();
+    this.jobsStore.getJobDescriptions();
     this.setInitMonthlyNames();
 
     this.jobDescriptSubscription = this.jobDescriptions$.pipe(
