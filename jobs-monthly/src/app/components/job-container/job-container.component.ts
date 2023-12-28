@@ -41,8 +41,9 @@ export class JobContainerComponent implements OnInit, OnDestroy {
   private jobDescriptSubscription: Subscription = new Subscription();
 
   public jobDescriptions$ = this.jobsStore.jobsDescripts$;
-  public monthlyDescriptions$ = this.jobsStore.monthlyDescripts$;
   public jobsByMonthTable$ = this.jobsStore.jobsByMonth$;
+  public monthlyDescriptions$ = this.jobsStore.monthlyDescripts$;
+  public loading$ = this.jobsStore.loading$;
 
   constructor(private readonly jobsStore: JobsStore) {}
 

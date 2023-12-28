@@ -41,8 +41,9 @@ export class JobsStore extends ComponentStore<JobDescriptionState>{
 
   readonly jobsDescripts$ = this.select((state) => state.jobsDescripts);
   readonly monthlyDescripts$ = this.select((state) => state.monthlyDescripts);
-  readonly jobsByMonth$ = this.select((state) => state.jobsByMonth );
-  readonly apiError$ = this.select((state) => state.apiError );
+  readonly jobsByMonth$ = this.select((state) => state.jobsByMonth);
+  readonly apiError$ = this.select((state) => state.apiError);
+  readonly loading$ = this.select((state) => state.loading);
 
   //---Updaters---//
 
