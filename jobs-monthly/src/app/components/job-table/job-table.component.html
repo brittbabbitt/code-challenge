@@ -1,6 +1,7 @@
 <div *ngIf="monthlyInputTableData?.jobs?.length">
   <h2>Month: {{monthlyInputTableData!.month | titlecase}}</h2>
   <div class="table-responsive d-none d-sm-block">
+    <hr>
     <table class="table table-striped">
       <thead>
         <tr>
@@ -21,6 +22,18 @@
         </tr>
       </tbody>
     </table>
+  </div>
+  <div class="d-xs-block d-sm-none">
+    <div *ngFor="let job of monthlyInputTableData!.jobs; index as i">
+      <div class="d-flex flex-column">
+        <hr>
+        <p class="m-0">{{ i + 1 }}</p>
+        <p class="m-0"><strong>Title: </strong>{{ job.websiteTitle }}</p>
+        <p class="m-0"><strong>Organization: </strong>{{ job.websiteOrganization }}</p>
+        <p class="m-0"><strong>Location: </strong>{{ job.websiteLocation.toLowerCase() }}</p>
+        <p class="m-0"><strong>Published: </strong>{{ job.websiteDatePublished | date: 'shortDate'}}</p>
+      </div>
+    </div>
   </div>
 </div>
 
