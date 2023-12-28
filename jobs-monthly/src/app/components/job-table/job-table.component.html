@@ -1,24 +1,45 @@
-<div *ngIf="monthlyInputTableData?.jobs?.length">
+<div *ngIf="monthlyInputTableData?.jobs?.length; else selectBar">
   <h2>Month: {{monthlyInputTableData!.month | titlecase}}</h2>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Title</th>
-        <th scope="col">Organization</th>
-        <th scope="col">Location</th>
-        <th scope="col">Published</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let job of monthlyInputTableData!.jobs; index as i">
-        <th scope="row">{{ i + 1 }}</th>
-        <td>{{ job.websiteTitle }}</td>
-        <td>{{ job.websiteOrganization }}</td>
-        <td>{{ job.websiteLocation.toLowerCase() }}</td>
-        <td> {{ job.websiteDatePublished | date: 'shortDate'}}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-responsive d-none d-sm-block">
+    <hr>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Title</th>
+          <th scope="col">Organization</th>
+          <th scope="col">Location</th>
+          <th scope="col">Published</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let job of monthlyInputTableData!.jobs; index as i">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ job.websiteTitle }}</td>
+          <td>{{ job.websiteOrganization }}</td>
+          <td>{{ job.websiteLocation.toLowerCase() }}</td>
+          <td> {{ job.websiteDatePublished | date: 'shortDate'}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="d-xs-block d-sm-none">
+    <div *ngFor="let job of monthlyInputTableData!.jobs; index as i">
+      <div class="d-flex flex-column">
+        <hr>
+        <p class="m-0">{{ i + 1 }}</p>
+        <p class="m-0"><strong>Title: </strong>{{ job.websiteTitle }}</p>
+        <p class="m-0"><strong>Organization: </strong>{{ job.websiteOrganization }}</p>
+        <p class="m-0"><strong>Location: </strong>{{ job.websiteLocation.toLowerCase() }}</p>
+        <p class="m-0"><strong>Published: </strong>{{ job.websiteDatePublished | date: 'shortDate'}}</p>
+      </div>
+    </div>
+  </div>
 </div>
+
+<ng-template #selectBar>
+  <div class="d-flex justify-content-center mt-5">
+    <p><strong>Please select a bar from the graph.</strong></p>
+  </div>
+</ng-template>
 
