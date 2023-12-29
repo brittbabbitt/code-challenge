@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 
 import { AppComponent } from './app.component';
@@ -5,7 +6,7 @@ import { AppComponent } from './app.component';
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent],
+      imports: [AppComponent, HttpClientModule],
     }).compileComponents();
   });
 
@@ -18,6 +19,6 @@ describe('AppComponent', () => {
   it(`should have the 'jobs' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('jobs');
+    expect(app.title).toEqual('Jobs');
   });
 });
