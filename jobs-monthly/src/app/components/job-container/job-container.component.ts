@@ -4,6 +4,7 @@ import {
 } from '@angular/common';
 import {
   Component,
+  inject,
   OnDestroy,
   OnInit,
 } from '@angular/core';
@@ -37,6 +38,8 @@ import { JobsStore } from '@stores/jobs-store.store';
   templateUrl: './job-container.component.html'
 })
 export class JobContainerComponent implements OnInit, OnDestroy {
+  private jobsStore: JobsStore = inject(JobsStore);
+
   private monthlyBuckets: JobMonthly[] = [];
   private jobDescriptSubscription: Subscription = new Subscription();
 
@@ -44,8 +47,6 @@ export class JobContainerComponent implements OnInit, OnDestroy {
   public jobsByMonthTable$ = this.jobsStore.jobsByMonth$;
   public monthlyDescriptions$ = this.jobsStore.monthlyDescripts$;
   public loading$ = this.jobsStore.loading$;
-
-  constructor(private readonly jobsStore: JobsStore) {}
 
   /**
    * @name setInitMonthlyNames

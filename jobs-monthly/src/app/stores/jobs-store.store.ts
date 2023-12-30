@@ -1,5 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {
+  inject,
+  Injectable,
+} from '@angular/core';
 
 import {
   Observable,
@@ -32,8 +35,9 @@ const DEFAULT_JOB_STATE: JobDescriptionState = {
 
 @Injectable()
 export class JobsStore extends ComponentStore<JobDescriptionState>{
+  private readonly jobService: JobsApiService = inject(JobsApiService);
 
-  constructor(private readonly jobService: JobsApiService) {
+  constructor() {
     super(DEFAULT_JOB_STATE);
   }
 
