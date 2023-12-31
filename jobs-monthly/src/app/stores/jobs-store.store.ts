@@ -84,7 +84,8 @@ export class JobsStore extends ComponentStore<JobDescriptionState>{
    * @description updates monthlyDescripts$ with a JobMonthly object of the selected month
    */
   readonly setNewJobsByMonth = this.effect((monthSelected$: Observable<string>) => {
-    return monthSelected$.pipe(
+    return monthSelected$
+    .pipe(
       withLatestFrom(this.monthlyDescripts$),
       tap(([monthSelected, monthsDescripts]) => {
           const selectedJobsByMonth = monthsDescripts.find((jobs) => jobs.month == monthSelected);
@@ -100,7 +101,8 @@ export class JobsStore extends ComponentStore<JobDescriptionState>{
    * if there is an error, the apiError$ is updated with the message from the request.
    */
   readonly getJobDescriptions = this.effect(() => {
-    return this.jobService.getJobDescriptions().pipe(
+    return this.jobService.getJobDescriptions()
+    .pipe(
       take(1),
       tapResponse(
         (jobDescripts: JobDescription[]) => {
