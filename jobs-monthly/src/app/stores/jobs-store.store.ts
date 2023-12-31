@@ -78,6 +78,11 @@ export class JobsStore extends ComponentStore<JobDescriptionState>{
 
   //--Effects--//
 
+  /**
+   * @name setNewJobsByMonth
+   * @param string | Observable<string> - 3 uppercased chars of the selected month (i.e. 'JAN')
+   * @description updates monthlyDescripts$ with a JobMonthly object of the selected month
+   */
   readonly setNewJobsByMonth = this.effect((monthSelected$: Observable<string>) => {
     return monthSelected$.pipe(
       withLatestFrom(this.monthlyDescripts$),
@@ -88,6 +93,12 @@ export class JobsStore extends ComponentStore<JobDescriptionState>{
     )
   });
 
+  /**
+   * @name getJobDescriptions
+   * @description calls getJobDescriptions from jobService to get a list of job descriptions from the api
+   * updates jobsDescripts$ with data from service call and sets loading to false after call completes,
+   * if there is an error, the apiError$ is updated with the message from the request.
+   */
   readonly getJobDescriptions = this.effect(() => {
     return this.jobService.getJobDescriptions().pipe(
       take(1),
@@ -96,7 +107,10 @@ export class JobsStore extends ComponentStore<JobDescriptionState>{
           this.updateJobDescriptions(jobDescripts);
           this.updateLoading(false);
         },
-        (error: HttpErrorResponse) => this.updateApiError(error.message)
+        (error: HttpErrorResponse) => {
+          this.updateApiError(error.message);
+          this.updateLoading(false);
+        }
       )
     );
   });

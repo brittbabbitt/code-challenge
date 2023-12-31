@@ -46,6 +46,7 @@ export class JobContainerComponent implements OnInit, OnDestroy {
   public jobDescriptions$ = this.jobsStore.jobsDescripts$;
   public jobsByMonthTable$ = this.jobsStore.jobsByMonth$;
   public monthlyDescriptions$ = this.jobsStore.monthlyDescripts$;
+  public apiError$ = this.jobsStore.apiError$;
   public loading$ = this.jobsStore.loading$;
 
   /**
@@ -120,7 +121,8 @@ export class JobContainerComponent implements OnInit, OnDestroy {
     this.jobsStore.getJobDescriptions();
     this.setInitMonthlyNames();
 
-    this.jobDescriptSubscription = this.jobDescriptions$.pipe(
+    this.jobDescriptSubscription = this.jobDescriptions$
+    .pipe(
       tap((jobs: JobDescription[]) => this.addMonthlyDescriptions(jobs))
     ).subscribe();
   }

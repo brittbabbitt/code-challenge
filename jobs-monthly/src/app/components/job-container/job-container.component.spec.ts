@@ -67,13 +67,35 @@ describe('JobContainerComponent', () => {
       const compSpy = spyOn(component, 'setNewJobsByMonth');
       component.setNewJobsByMonth('JAN');
       expect(compSpy).toHaveBeenCalledOnceWith('JAN');
-    })
+    });
 
-    it('should call the JobsStore.setNewJobsByMonth', () => {
+    it('should call the JobsStore setNewJobsByMonth', () => {
       const storeSpy = spyOn(store, 'setNewJobsByMonth');
       component.setNewJobsByMonth('JAN');
       expect(storeSpy).toHaveBeenCalled();
-    })
+    });
+
+  });
+
+  describe('ngOnInit', () => {
+
+    it('should call the JobsStore getJobDescriptions', () => {
+      const storeSpy = spyOn(store, 'getJobDescriptions');
+      component.ngOnInit();
+      expect(storeSpy).toHaveBeenCalled();
+    });
+
+    it('should call setInitMonthlyNames', () => {
+      const initMonthlyNamesSpy = spyOn<any>(component, 'setInitMonthlyNames');
+      component.ngOnInit();
+      expect(initMonthlyNamesSpy).toHaveBeenCalled();
+    });
+
+    it('should call addMonthlyDescriptions', () => {
+      const monthlyDescriptionsSpy = spyOn<any>(component, 'addMonthlyDescriptions');
+      component.ngOnInit();
+      expect(monthlyDescriptionsSpy).toHaveBeenCalled();
+    });
 
   });
 

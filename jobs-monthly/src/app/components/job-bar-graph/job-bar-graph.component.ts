@@ -76,6 +76,9 @@ export class JobBarGraphComponent implements OnChanges {
     return this.onMonthClick.emit(label);
 	}
 
+  /**
+   * @description checks change of monthlyInputData and updates the bar graph when needed
+   */
   ngOnChanges() {
     if(this.monthlyInputData.length > 0){
       this.setMonthlyChartOptions(this.mapChartData(this.monthlyInputData));
