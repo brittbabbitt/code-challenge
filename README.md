@@ -6,11 +6,15 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 cd to `./mock-server` and run `npm run mock:server`. You will know the server is running when it says `Server Listening on port 3000`.
 
-note: The mock-server was created because the api endpoint given was not working at the time I was executing this challenge.
+note: The mock-server was created because the api endpoint given was not working at the time this app was executing this challenge.
 
 ## Development server
 
 cd to `./jobs-monthly`. Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+
+## Running unit tests
+
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io). Test are scaffolded and very basic.
 
 ## Simple Structure
 Below is a model of the directory structure for the app.
@@ -37,14 +41,6 @@ Run `ng generate component component-name` to generate a new component. You can 
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io). Test are scaffolded and very basic.
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
 ## Further help
 
