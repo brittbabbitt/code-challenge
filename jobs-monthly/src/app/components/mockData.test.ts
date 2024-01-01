@@ -1,3 +1,5 @@
+import { JobDescriptionState } from '@interfaces/job-description.object';
+
 const TESTDATA = {
   jobsByMonth: {
     month: 'JAN',
@@ -116,5 +118,13 @@ const TESTDATA = {
     }]
   }
 }
+
+export const TEST_JOB_STATE: JobDescriptionState = {
+  jobsDescripts: TESTDATA.jobDescriptions,
+  monthlyDescripts: TESTDATA.monthlyJobDescriptions,
+  jobsByMonth: TESTDATA.jobsByMonth,
+  apiError: null,
+  loading: true,
+};
 
 export default TESTDATA;
