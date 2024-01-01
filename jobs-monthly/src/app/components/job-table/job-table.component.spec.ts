@@ -23,6 +23,10 @@ describe('JobTableComponent', () => {
     fixture.detectChanges();
   });
 
+  afterAll(() => {
+    fixture.destroy();
+  })
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
