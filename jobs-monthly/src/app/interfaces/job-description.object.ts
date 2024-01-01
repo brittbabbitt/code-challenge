@@ -1,3 +1,7 @@
+/**
+ * @name JobDescription
+ * @description defines the information for job descriptions
+ */
 export interface JobDescription {
   websiteTitle: string,
   websiteOrganization: string,
@@ -5,17 +9,29 @@ export interface JobDescription {
   websiteDatePublished: string
 }
 
+/**
+ * @name JobDescriptionData
+ * @description defines the data coming back from the api request
+ */
 export interface JobDescriptionData {
   data: {
     jobDescriptions: JobDescription[]
   }
 }
 
+/**
+ * @name JobMonthly
+ * @description defines the job descriptions organized via month
+ */
 export interface JobMonthly {
   month: string,
   jobs: JobDescription[],
 }
 
+/**
+ * @name JobDescriptionState
+ * @description defines the job descriptions state for the Jobs Store
+ */
 export interface JobDescriptionState {
   jobsDescripts: JobDescription[];
   monthlyDescripts: JobMonthly[];
@@ -24,6 +40,11 @@ export interface JobDescriptionState {
   loading: boolean;
 };
 
+/**
+ * @name MONTHS
+ * @description enum mapping 3 uppercased chars to two diggit numbers
+ * for mapping ISO 8601 Month Dates
+ */
 export enum MONTHS {
   JAN = '01',
   FEB = '02',

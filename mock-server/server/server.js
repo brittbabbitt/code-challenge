@@ -8,7 +8,9 @@ server.use(jsonServer.bodyParser);
 const getJobDescriptionData = require('../server/data/jobs');
 
 server.get('/api/jobs', (req, res, next) => {
-  res.status(200).send(getJobDescriptionData.getJobDesctions);
+  setTimeout(() => {
+    res.status(200).send(getJobDescriptionData.getJobDesctions);
+  }, 1500)
 });
 
 server.listen(3000, () => {

@@ -1,5 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {
+  inject,
+  Injectable,
+} from '@angular/core';
 
 import {
   map,
@@ -17,8 +20,14 @@ const URL = 'http://localhost:3000/api/jobs';
   providedIn: 'root'
 })
 export class JobsApiService {
-  constructor(private http: HttpClient) { }
+  private http: HttpClient = inject(HttpClient);
 
+  /**
+   * @name getJobDescriptions
+   * @returns Observable<JobDescription[]>
+   * @description http get request call for an array of JobDescriptionData
+   * response is refined as Observable<JobDescription[]
+   */
   getJobDescriptions(): Observable<JobDescription[]> {
     return this.http.get<JobDescriptionData>(URL)
       .pipe(map((resp: JobDescriptionData) => resp.data.jobDescriptions));

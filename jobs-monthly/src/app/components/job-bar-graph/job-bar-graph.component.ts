@@ -20,7 +20,16 @@ export class JobBarGraphComponent implements OnChanges {
   @Input() monthlyInputData: JobMonthly[] = [];
   @Output() onMonthClick = new EventEmitter<string>();
 
-  monthlyChartOptions = {};
+  monthlyChartOptions = {
+    title: {
+      text: '',
+    },
+    data: [{
+      type: 'column',
+      click: (e: any) => {},
+      dataPoints: [{label: '', y: 0}]
+    }]
+  };
 
   /**
    * @name mapChartData
@@ -55,10 +64,10 @@ export class JobBarGraphComponent implements OnChanges {
   private setMonthlyChartOptions (dataInfo: {label: string, y: number}[]) {
     this.monthlyChartOptions = {
       title: {
-        text: "Job Descriptions Per Month"
+        text: 'Job Descriptions Per Month',
       },
       data: [{
-        type: "column",
+        type: 'column',
         click: this.monthClick,
         dataPoints: dataInfo
       }]
@@ -76,6 +85,9 @@ export class JobBarGraphComponent implements OnChanges {
     return this.onMonthClick.emit(label);
 	}
 
+  /**
+   * @description checks change of monthlyInputData and updates the bar graph when needed
+   */
   ngOnChanges() {
     if(this.monthlyInputData.length > 0){
       this.setMonthlyChartOptions(this.mapChartData(this.monthlyInputData));
