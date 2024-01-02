@@ -90,21 +90,21 @@ describe('JobsStoreService', () => {
         }
       })
     });
+  });
 
-    describe('Effects', () => {
-      it('setNewJobsByMonth should take the month and updateJobsByMonth with the array of jobs matching the selected month', () =>{
-        const selectedMonth = 'FEB'
-        store.updateMonthlyDescriptions(TEST_JOB_STATE.monthlyDescripts);
-        store.setNewJobsByMonth(selectedMonth);
+  describe('Effects', () => {
+    it('setNewJobsByMonth should take the month and updateJobsByMonth with the array of jobs matching the selected month', () =>{
+      const selectedMonth = 'FEB'
+      store.updateMonthlyDescriptions(TEST_JOB_STATE.monthlyDescripts);
+      store.setNewJobsByMonth(selectedMonth);
 
-        store.jobsByMonth$.pipe(take(1)).subscribe({
-          next: (jobs: JobMonthly) => {
-            expect(jobs.month).toBe(selectedMonth);
-          },
-        });
+      store.jobsByMonth$.pipe(take(1)).subscribe({
+        next: (jobs: JobMonthly) => {
+          expect(jobs.month).toBe(selectedMonth);
+        },
       });
-
     });
+
   });
 
 });
